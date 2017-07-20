@@ -187,7 +187,8 @@ public final class SimpleLog {
     if (enabled) {
       // TODO: Bug here (IndexOutOfBoundsException) that's revealed by the Index Checker: no check
       // on whether currently indented.
-      indent_str = indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length());
+      indent_str =
+          indent_str.substring(0, indent_str.length() - INDENT_STR_ONE_LEVEL.length()); // bug
       pop_start_time();
     }
   }

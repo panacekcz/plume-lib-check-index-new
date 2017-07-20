@@ -575,7 +575,9 @@ public final class UtilMDE {
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
    */
-  @SuppressWarnings("signature") // conversion routine
+  @SuppressWarnings({"signature", "lowerbound:argument.type.incompatible"}) // conversion routine
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(
       /*@BinaryName*/ String classname) {
     int dims = 0;
@@ -655,6 +657,9 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
+    @SuppressWarnings("index:argument.type.incompatible")
+    // Index checker does not infer MinLen after call to startsWith
+    // https://github.com/kelloggm/checker-framework/issues/56
     String comma_sep_args = arglist.substring(1, arglist.length() - 1); // index TODO: issue #56
     StringTokenizer args_tokenizer = new StringTokenizer(comma_sep_args, ",", false);
     while (args_tokenizer.hasMoreTokens()) {
@@ -688,7 +693,9 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings("signature") // conversion routine
+  @SuppressWarnings({"signature", "index:argument.type.incompatible"}) // conversion routine
+  // Index checker does not infer MinLen after call to startsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
@@ -721,6 +728,9 @@ public final class UtilMDE {
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
    */
+  @SuppressWarnings("index:argument.type.incompatible") // conversion routine
+  // Index checker does not infer MinLen after call to startsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public static String arglistFromJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -1074,6 +1084,9 @@ public final class UtilMDE {
     String prefix;
     String suffix;
 
+    @SuppressWarnings("upperbound:argument.type.incompatible")
+    // The postcondition of indexOf does not guarantee an offset
+    // https://github.com/panacekcz/checker-framework/issues/4
     public WildcardFilter(String filename) {
       int astloc = filename.indexOf("*");
       if (astloc == -1) {
@@ -1245,7 +1258,7 @@ public final class UtilMDE {
 
     try {
       FileWriter writer = new FileWriter(file);
-      writer.write(contents, 0, contents.length());
+      writer.write(contents, 0, contents.length()); // fix elsewhere
       writer.close();
     } catch (Exception e) {
       throw new Error("Unexpected error in writeFile(" + file + ")", e);
@@ -2200,6 +2213,9 @@ public final class UtilMDE {
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
    */
+  @SuppressWarnings("index:argument.type.incompatible")
+  // The postcondition of indexOf does not guarantee an offset
+  // https://github.com/panacekcz/checker-framework/issues/4
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();
@@ -2250,6 +2266,9 @@ public final class UtilMDE {
    * @param delim delimiter to split the string on
    * @return array of length at least 1, containing s split on delimiter
    */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // The postcondition of indexOf does not guarantee an offset
+  // https://github.com/panacekcz/checker-framework/issues/4
   public static String[] split(String s, String delim) {
     int delimlen = delim.length();
     if (delimlen == 0) {
@@ -2367,7 +2386,7 @@ public final class UtilMDE {
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int orig_len = orig.length();
     for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
@@ -2492,10 +2511,16 @@ public final class UtilMDE {
    * @param orig string to quoto
    * @return quoted version of orig
    */
+  @SuppressWarnings({
+    "upperbound:assignment.type.incompatible",
+    "upperbound:argument.type.incompatible"
+  })
+  // The postcondition of indexOf does not guarantee an offset
+  // https://github.com/panacekcz/checker-framework/issues/4
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int this_esc = orig.indexOf('\\');
     while (this_esc != -1) {
       if (this_esc == orig.length() - 1) {
@@ -2613,12 +2638,18 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
    */
+  @SuppressWarnings({
+    "upperbound:assignment.type.incompatible",
+    "upperbound:argument.type.incompatible"
+  })
+  // The postcondition of indexOf does not guarantee an offset
+  // https://github.com/panacekcz/checker-framework/issues/4
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
     while (delim_index > -1) {
-      int non_ws_index = delim_index + delim_len;
+      /*@IndexOrHigh("arg")*/ int non_ws_index = delim_index + delim_len;
       while ((non_ws_index < arg.length()) && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
         non_ws_index++;
       }

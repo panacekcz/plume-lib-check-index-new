@@ -2582,7 +2582,10 @@ public final class TestPlume {
     assert c1.getNumberOfPrintedBytes() == 9;
     assert c1.getNumberOfWrittenBytes() == 22;
     assert c1.getNumberOfPrintedChars() == 9;
-    c1.write("A long string we will print part of", 5, 10);
+    // String literal assigned to variable, so that index checker infers upper bounds of indices.
+    // https://github.com/kelloggm/checker-framework/issues/165
+    String str = "A long string we will print part of";
+    c1.write(str, 5, 10);
     assert c1.getNumberOfPrintedBytes() == 9;
     assert c1.getNumberOfWrittenBytes() == 32;
     assert c1.getNumberOfPrintedChars() == 9;

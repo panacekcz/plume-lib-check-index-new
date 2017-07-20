@@ -619,6 +619,9 @@ public class MultiVersionControl {
   ///
 
   /** Read checkouts from the file (in .mvc-checkouts format), and add them to the set. */
+  @SuppressWarnings("index:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   static void readCheckouts(File file, Set<Checkout> checkouts) throws IOException {
     RepoType currentType = RepoType.BZR; // arbitrary choice
     String currentRoot = null;
@@ -868,6 +871,11 @@ public class MultiVersionControl {
     checkouts.add(new Checkout(RepoType.CVS, cDir, repoRoot, pathInRepoAtCheckout));
   }
 
+  @SuppressWarnings("index:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
+  // Index checker crash
+  // https://github.com/typetools/checker-framework/issues/1411
   /** Given a directory named ".hg" , create a corresponding Checkout object for its parent. */
   static Checkout dirToCheckoutHg(File hgDir, File dir) {
     String repository = null;
@@ -1541,6 +1549,9 @@ public class MultiVersionControl {
   // If show_normal_output is true, then display the output even if the process
   // completed normally.  Ordinarily, output is displayed only if the
   // process completed erroneously.
+  @SuppressWarnings("index:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   void perform_command(ProcessBuilder pb, List<Replacer> replacers, boolean show_normal_output) {
     /// The redirectOutput method only exists in Java 1.7.  Sigh.
     /// The workaround is to make TimeLimitProcess buffer its output.

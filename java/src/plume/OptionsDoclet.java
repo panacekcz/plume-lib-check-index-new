@@ -708,6 +708,11 @@ public class OptionsDoclet {
   }
 
   /** refillWidth includes the padding. */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
+  // The postcondition of indexOf does not guarantee an offset
+  // https://github.com/panacekcz/checker-framework/issues/4
   private String refill(String in, int padding, int firstLinePadding, int refillWidth) {
     if (refillWidth <= 0) {
       return in;
@@ -759,6 +764,9 @@ public class OptionsDoclet {
    *     with the option itself)
    * @return HTML describing oi
    */
+  @SuppressWarnings("lowerbound:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public String optionToHtml(Options.OptionInfo oi, int padding) {
     StringBuilder b = new StringBuilder();
     Formatter f = new Formatter(b);

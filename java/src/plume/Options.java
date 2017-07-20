@@ -822,6 +822,9 @@ public class Options {
    * @return all non-option arguments
    * @throws ArgException if the command line contains unknown option or misused options
    */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to startsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public String[] parse(String[] args) throws ArgException {
 
     List<String> non_options = new ArrayList<String>();
@@ -1538,6 +1541,9 @@ public class Options {
    * Parse an option value and return its three components (short_name, type_name, and description).
    * The short_name and type_name are null if they are not specified in the string.
    */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to startsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   private static ParseResult parse_option(String val) {
 
     // Get the short name, long name, and description
@@ -1552,9 +1558,10 @@ public class Options {
             "Malformed @Option argument \""
                 + val
                 + "\".  An argument that starts with '-' should contain a short name, a space, and a description.");
+      } else {
+        short_name = val.substring(1, 2);
+        description = val.substring(3);
       }
-      short_name = val.substring(1, 2);
-      description = val.substring(3);
     } else {
       short_name = null;
       description = val;

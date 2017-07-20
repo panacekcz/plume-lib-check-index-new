@@ -173,7 +173,11 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
     values = null;
   }
 
-  @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
+  @SuppressWarnings({
+    "sideeffectfree",
+    "samelen:override.return.invalid"
+  }) // side effect to local state (clone)
+  // samelen: https://github.com/kelloggm/checker-framework/issues/164
   /*@SideEffectFree*/
   public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;

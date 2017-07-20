@@ -531,7 +531,12 @@ public final class ICalAvailable {
     // Remove trailing year, such as ", 1952".
     // result = result.substring(0, result.length() - 6);
     // Prepend day of week.
-    result = dffull.format(d).substring(0, 3) + " " + result;
+
+    // TODO: This expression depends on a particular date format
+    // retrieved by DateFormat.getDateInstance(DateFormat.FULL, Locale.US)
+    // is is safe to assume that this format is fixed or at least that
+    // the result is at least 3 characters long?
+    result = dffull.format(d).substring(0, 3) + " " + result; // possible bug
     return result;
   }
 }

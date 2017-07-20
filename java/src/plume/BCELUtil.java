@@ -661,6 +661,9 @@ public final class BCELUtil {
    * @param classname the class to convert to a type
    * @return the type corresponding to the given class name
    */
+  @SuppressWarnings("lowerbound:argument.type.incompatible")
+  // Index checker does not infer MinLen after call to endsWith
+  // https://github.com/kelloggm/checker-framework/issues/56
   public static Type classname_to_type(String classname) {
 
     // Get the array depth (if any)

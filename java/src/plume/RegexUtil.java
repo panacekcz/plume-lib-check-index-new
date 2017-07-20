@@ -178,8 +178,11 @@ public final class RegexUtil {
    */
   @SuppressWarnings({
     "regex",
-    "purity.not.deterministic.call"
+    "purity.not.deterministic.call",
+    "type.invalid"
   }) // RegexUtil; temp value used in pure method is equal up to equals but not up to ==
+  // "type.invalid": the framework incorrectly handles annotations of Character.toString
+  // https://github.com/typetools/checker-framework/issues/1356
   /*@Pure*/
   /*@EnsuresQualifierIf(result=true, expression="#1", qualifier=Regex.class)*/
   public static boolean isRegex(char c) {
