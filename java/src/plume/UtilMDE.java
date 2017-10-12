@@ -583,14 +583,16 @@ public final class UtilMDE {
    * @param classname name of the class, in binary class name format
    * @return name of the class, in field descriptor format
    */
-  @SuppressWarnings("signature") // conversion routine
+  @SuppressWarnings({"signature", "lowerbound:argument.type.incompatible"}) // conversion routine
+  // The refinement of MinLen of sans_array by endsWith does not help here
+  // possibly due to issue #1423
   public static /*@FieldDescriptor*/ String binaryNameToFieldDescriptor(
       /*@BinaryName*/ String classname) {
     int dims = 0;
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #56 string
+      sans_array = sans_array.substring(0, sans_array.length() - 2); // index TODO: issue #1423
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -663,7 +665,7 @@ public final class UtilMDE {
       throw new Error("Malformed arglist: " + arglist);
     }
     String result = "(";
-    String comma_sep_args = arglist.substring(1, arglist.length() - 1); // index TODO: issue #56
+    String comma_sep_args = arglist.substring(1, arglist.length() - 1);
     StringTokenizer args_tokenizer = new StringTokenizer(comma_sep_args, ",", false);
     while (args_tokenizer.hasMoreTokens()) {
       @SuppressWarnings("signature") // substring
@@ -696,7 +698,9 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings("signature") // conversion routine
+  @SuppressWarnings({"signature", "upperbound:argument.type.incompatible"}) // conversion routine
+  // The refinement of MinLen of classname by startsWith does not help here
+  // possibly due to issue #1423
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
@@ -704,11 +708,11 @@ public final class UtilMDE {
     int dims = 0;
     while (classname.startsWith("[")) {
       dims++;
-      classname = classname.substring(1);
+      classname = classname.substring(1); // index TODO: issue #1423
     }
     String result;
     if (classname.startsWith("L") && classname.endsWith(";")) {
-      result = classname.substring(1, classname.length() - 1); // index TODO: issue #56 strings
+      result = classname.substring(1, classname.length() - 1);
     } else {
       result = primitiveClassesFromJvm.get(classname);
       if (result == null) {
@@ -729,6 +733,12 @@ public final class UtilMDE {
    * @param arglist an argument list, in JVML format
    * @return argument list, in Java format
    */
+  @SuppressWarnings("index:argument.type.incompatible")
+  // 1) nonarray_pos cannot go past the end of arglist, because
+  // arglist cannot end with '['
+  // 2) semi_pos+1 is valid for arglist.substring, because it is
+  // an index of substring of length 1
+  // https://github.com/typetools/checker-framework/pull/1461
   public static String arglistFromJvm(String arglist) {
     if (!(arglist.startsWith("(") && arglist.endsWith(")"))) {
       throw new Error("Malformed arglist: " + arglist);
@@ -746,7 +756,8 @@ public final class UtilMDE {
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
         int semi_pos = arglist.indexOf(";", nonarray_pos);
-        result += fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1));
+        result +=
+            fieldDescriptorToBinaryName(arglist.substring(pos, semi_pos + 1)); // index TODO: #1461
         pos = semi_pos + 1;
       } else {
         String maybe = fieldDescriptorToBinaryName(arglist.substring(pos, nonarray_pos + 1));
@@ -1100,13 +1111,17 @@ public final class UtilMDE {
     String prefix;
     String suffix;
 
+    @SuppressWarnings("upperbound:argument.type.incompatible")
+    // astloc+1 is a valid argument for substring, because it is an index of a substring of length 1
+    // https://github.com/panacekcz/checker-framework/issues/4
+    // https://github.com/typetools/checker-framework/pull/1461
     public WildcardFilter(String filename) {
       int astloc = filename.indexOf("*");
       if (astloc == -1) {
         throw new Error("No asterisk in wildcard argument: " + filename);
       }
       prefix = filename.substring(0, astloc);
-      suffix = filename.substring(astloc + 1);
+      suffix = filename.substring(astloc + 1); // index TODO: #1461
       if (filename.indexOf("*") != -1) {
         throw new Error("Multiple asterisks in wildcard argument: " + filename);
       }
@@ -2262,18 +2277,23 @@ public final class UtilMDE {
    * @param newStr the replacement
    * @return target with all instances of oldStr replaced by newStr
    */
+  @SuppressWarnings("index:assignment.type.incompatible")
+  // pos + oldStr.length() can be assigned to lastend,
+  // because pos is index of oldStr in target
+  // https://github.com/panacekcz/checker-framework/issues/4
+  // https://github.com/typetools/checker-framework/pull/1461
   public static String replaceString(String target, String oldStr, String newStr) {
     if (oldStr.equals("")) {
       throw new IllegalArgumentException();
     }
 
     StringBuffer result = new StringBuffer();
-    /*@ IndexFor("target")*/ int lastend = 0; // Index: TODO: issue 80 string support
-    /*TODO: IndexOrLow("target")*/ int pos;
+    /*@IndexOrHigh("target")*/ int lastend = 0;
+    int pos;
     while ((pos = target.indexOf(oldStr, lastend)) != -1) {
       result.append(target.substring(lastend, pos));
       result.append(newStr);
-      lastend = pos + oldStr.length();
+      lastend = pos + oldStr.length(); // index TODO: #1461
     }
     result.append(target.substring(lastend));
     return result.toString();
@@ -2310,6 +2330,11 @@ public final class UtilMDE {
    * @param delim delimiter to split the string on
    * @return array of length at least 1, containing s split on delimiter
    */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // delimpos+delimlen is a valid argument to substring,
+  // because delimpos is an index of delim in s
+  // https://github.com/panacekcz/checker-framework/issues/4
+  // https://github.com/typetools/checker-framework/pull/1461
   public static String[] split(String s, String delim) {
     int delimlen = delim.length();
     if (delimlen == 0) {
@@ -2318,7 +2343,7 @@ public final class UtilMDE {
     Vector<String> result_list = new Vector<String>();
     for (int delimpos = s.indexOf(delim); delimpos != -1; delimpos = s.indexOf(delim)) {
       result_list.add(s.substring(0, delimpos));
-      s = s.substring(delimpos + delimlen);
+      s = s.substring(delimpos + delimlen); // index TODO: #1461
     }
     result_list.add(s);
     String[] result = result_list.toArray(new /*@NonNull*/ String[result_list.size()]);
@@ -2427,7 +2452,7 @@ public final class UtilMDE {
   public static String escapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen right before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int orig_len = orig.length();
     for (int i = 0; i < orig_len; i++) {
       char c = orig.charAt(i);
@@ -2555,7 +2580,7 @@ public final class UtilMDE {
   public static String unescapeNonJava(String orig) {
     StringBuffer sb = new StringBuffer();
     // The previous escape character was seen just before this position.
-    int post_esc = 0;
+    /*@IndexOrHigh("orig")*/ int post_esc = 0;
     int this_esc = orig.indexOf('\\');
     while (this_esc != -1) {
       if (this_esc == orig.length() - 1) {
@@ -2673,14 +2698,21 @@ public final class UtilMDE {
    * @param delimiter string to remove whitespace after
    * @return version of arg, with whitespace after delimiter removed
    */
+  @SuppressWarnings("index")
+  // 1) delim_index + delim_len can be assigned to non_ws_index,
+  // because delim_index is an index of delimiter in arg
+  // https://github.com/panacekcz/checker-framework/issues/4
+  // https://github.com/typetools/checker-framework/pull/1461
+  // 2) non_ws_index is a valid argument to charAt because of the preceding check
+  // 3) non_ws_index++ is a valid because of the preceding check
   public static String removeWhitespaceAfter(String arg, String delimiter) {
     // String orig = arg;
     int delim_len = delimiter.length();
     int delim_index = arg.indexOf(delimiter);
     while (delim_index > -1) {
-      int non_ws_index = delim_index + delim_len;
+      /*@IndexOrHigh("arg")*/ int non_ws_index = delim_index + delim_len; // index TODO: #1461
       while ((non_ws_index < arg.length()) && (Character.isWhitespace(arg.charAt(non_ws_index)))) {
-        non_ws_index++;
+        non_ws_index++; // index TODO
       }
       // if (non_ws_index == arg.length()) {
       //   System.out.println("No nonspace character at end of: " + arg);
@@ -2688,7 +2720,9 @@ public final class UtilMDE {
       //   System.out.println("'" + arg.charAt(non_ws_index) + "' not a space character at " + non_ws_index + " in: " + arg);
       // }
       if (non_ws_index != delim_index + delim_len) {
-        arg = arg.substring(0, delim_index + delim_len) + arg.substring(non_ws_index);
+        arg =
+            arg.substring(0, delim_index + delim_len)
+                + arg.substring(non_ws_index); // index TODO: #1461
       }
       delim_index = arg.indexOf(delimiter, delim_index + 1);
     }

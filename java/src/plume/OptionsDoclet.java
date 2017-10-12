@@ -710,6 +710,11 @@ public class OptionsDoclet {
   }
 
   /** refillWidth includes the padding. */
+  @SuppressWarnings("upperbound:argument.type.incompatible")
+  // ulPos + eol.length() is a valid argument to substring,
+  // because ulPos is an index of eol in in
+  // https://github.com/panacekcz/checker-framework/issues/4
+  // https://github.com/typetools/checker-framework/issues/1461
   private String refill(String in, int padding, int firstLinePadding, int refillWidth) {
     if (refillWidth <= 0) {
       return in;
@@ -719,7 +724,7 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      suffix = in.substring(ulPos + eol.length());
+      suffix = in.substring(ulPos + eol.length()); // index TODO: #1461
       in = in.substring(0, ulPos);
     }
 

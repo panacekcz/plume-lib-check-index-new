@@ -888,7 +888,7 @@ public class MultiVersionControl {
       if (pathsSection != null) {
         repository = pathsSection.get("default");
         if (repository != null && repository.endsWith("/")) {
-          repository = repository.substring(0, repository.length() - 1); // index TODO: issue #56
+          repository = repository.substring(0, repository.length() - 1);
         }
       }
     }
