@@ -753,7 +753,7 @@ public final class UtilMDE {
       }
       char c = arglist.charAt(nonarray_pos);
       if (c == 'L') {
-        int semi_pos = arglist.indexOf(";", nonarray_pos);
+        int semi_pos = arglist.indexOf(';', nonarray_pos);
         if (semi_pos == -1) {
           throw new Error("Malformed arglist: " + arglist);
         }

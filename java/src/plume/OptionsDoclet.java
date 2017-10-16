@@ -718,7 +718,9 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      suffix = in.substring(ulPos + eol.length());
+      @SuppressWarnings("index") // https://github.com/panacekcz/checker-framework/issues/23
+      String suffix_temp = in.substring(ulPos + eol.length());
+      suffix = suffix_temp;
       in = in.substring(0, ulPos);
     }
 
