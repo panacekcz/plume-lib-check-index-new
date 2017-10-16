@@ -14,7 +14,7 @@ The correct way to build the system is to run 'make'.
    * @param y modulus
    * @return x % y, where the result is constrained to be non-negative
    */
-  @SuppressWarnings("lowerbound") // result is positive because abs(non-zero) is positive
+  @SuppressWarnings("lowerbound") // result is positive because Math.abs(non-zero) is positive
   /*@Pure*/ /*@StaticallyExecutable*/
   public static /*@NonNegative*/ INT mod_positive(INT x, INT y) {
     INT result = x % y;
@@ -119,6 +119,7 @@ The correct way to build the system is to run 'make'.
    *   or null if no such exists or the array contains fewer than 3 elements
    */
   /*@Pure*/ /*@StaticallyExecutable*/
+  @SuppressWarnings("index")
   public static INT /*@Nullable*/ /*@ArrayLen(2)*/ [] modulus_strict(INT[] nums, boolean nonstrict_ends) {
     if (nums.length < 3) {
       return null;

@@ -224,7 +224,7 @@ public class OptionsDoclet {
    * @param root the root document
    * @return true if processing completed without an error
    */
-  @SuppressWarnings("index") // com.sun.javadoc.RootDoc#options needs an annotation
+  @SuppressWarnings({"index", "value"}) // com.sun.javadoc.RootDoc#options needs an annotation
   public static boolean start(RootDoc root) {
     List<Object> objs = new ArrayList<Object>();
     for (ClassDoc doc : root.specifiedClasses()) {
@@ -274,9 +274,7 @@ public class OptionsDoclet {
     }
 
     OptionsDoclet o = new OptionsDoclet(root, options);
-    @SuppressWarnings("value") // com.sun.javadoc.RootDoc needs annotations
-    String[] /*@MinLen(1)*/[] root_options = root.options();
-    o.setOptions(root_options);
+    o.setOptions(root.options());
     o.processJavadoc();
     try {
       o.write();
@@ -328,7 +326,8 @@ public class OptionsDoclet {
    *     overview</a>
    */
   @SuppressWarnings({
-    "index", // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
+    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty), &
+    // javadoc has already validated them via the optionLength() method before calling this method.
     "upperbound" // indices are legal because of literal command-line options that precede them
   })
   public static boolean validOptions(String[] /*@MinLen(1)*/[] options, DocErrorReporter reporter) {
@@ -411,7 +410,7 @@ public class OptionsDoclet {
    * @param options the command-line options to parse: a list of 1- or 2-element arrays
    */
   @SuppressWarnings({
-    "index", // need @MinLen (dependently): options is an array of 1- or 2-element arrays (none is empty)
+    "index", // dependent @MinLen: options is an array of 1- or 2-element arrays (none is empty)
     "upperbound" // indices are legal because of literal command-line options that precede them
   })
   public void setOptions(String[] /*@MinLen(1)*/[] options) {
@@ -710,11 +709,6 @@ public class OptionsDoclet {
   }
 
   /** refillWidth includes the padding. */
-  @SuppressWarnings("upperbound:argument.type.incompatible")
-  // ulPos + eol.length() is a valid argument to substring,
-  // because ulPos is an index of eol in in
-  // https://github.com/panacekcz/checker-framework/issues/4
-  // https://github.com/typetools/checker-framework/issues/1461
   private String refill(String in, int padding, int firstLinePadding, int refillWidth) {
     if (refillWidth <= 0) {
       return in;
@@ -724,7 +718,7 @@ public class OptionsDoclet {
     String suffix = null;
     int ulPos = in.indexOf(eol + "<ul>" + eol);
     if (ulPos != -1) {
-      suffix = in.substring(ulPos + eol.length()); // index TODO: #1461
+      suffix = in.substring(ulPos + eol.length());
       in = in.substring(0, ulPos);
     }
 

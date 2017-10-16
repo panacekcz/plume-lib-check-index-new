@@ -50,7 +50,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static int min(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(int[])");
@@ -70,7 +71,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static long min(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(long[])");
@@ -90,7 +92,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static double min(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(double[])");
@@ -110,7 +113,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Integer min(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Integer[])");
@@ -134,7 +138,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Long min(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Long[])");
@@ -158,7 +163,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Double min(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to min(Double[])");
@@ -182,7 +188,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static int max(int[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(int[])");
@@ -202,7 +209,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static long max(long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(long[])");
@@ -222,7 +230,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static double max(double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(double[])");
@@ -242,7 +251,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Integer max(Integer[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Integer[])");
@@ -266,7 +276,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Long max(Long[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Long[])");
@@ -290,7 +301,8 @@ public final class ArraysMDE {
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
   /*@Pure*/
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   public static Double max(Double[] a) {
     if (a.length == 0) {
       throw new ArrayIndexOutOfBoundsException("Empty array passed to max(Double[])");
@@ -313,7 +325,8 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int /*@ArrayLen(2)*/[] min_max(int[] a) {
@@ -337,7 +350,8 @@ public final class ArraysMDE {
    * @return a two-element array containing the smallest and largest values in the array
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long /*@ArrayLen(2)*/[] min_max(long[] a) {
@@ -361,7 +375,8 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static int element_range(int[] a) {
@@ -380,7 +395,8 @@ public final class ArraysMDE {
    * @return the difference between the smallest and largest array elements
    * @throws ArrayIndexOutOfBoundsException if the array has length 0
    */
-  @SuppressWarnings("purity.not.deterministic.not.sideeffectfree.object.creation") // issue #951
+  @SuppressWarnings(
+      "purity.not.deterministic.not.sideeffectfree.object.creation") // http://tinyurl.com/cfissue/951
   /*@Pure*/
   /*@StaticallyExecutable*/
   public static long element_range(long[] a) {
@@ -3030,7 +3046,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) String[], @PolyAll(2) String[]), but the
@@ -3082,7 +3098,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3143,7 +3159,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
@@ -3262,7 +3278,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) T[], @PolyAll(2) T[]), but the
@@ -3327,7 +3343,7 @@ public final class ArraysMDE {
      */
     /*@Pure*/
     @SuppressWarnings(
-        "override.param.invalid") // CF bug: does not permit expanding annotations on array elements with @Poly
+        "override.param.invalid") // CF bug: doesn't expand annotations on array elements with @Poly
     // The signature on this method is unnecessarily strict because it
     // requires that the component types be identical.  The signature should
     // be compare(@PolyAll(1) Object[], @PolyAll(2) Object[]), but the
@@ -3465,6 +3481,8 @@ public final class ArraysMDE {
    * @return a list of partitionings, where each contains exactly k subsets
    */
   @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/152
+  // @SuppressWarnings("index") // lists: "p.addToPart(i, ...)" is OK: i is < numNonemptyParts
+  //  and p.size() = numNonemptyParts + numEmptyParts, both of which are NN.
   public static <T> List<Partitioning<T>> partitionIntoHelper(
       Queue<T> elts,
       List</*@ LengthIs("#3")*/ Partitioning<T>> resultSoFar,
@@ -3489,11 +3507,7 @@ public final class ArraysMDE {
       List<Partitioning<T>> resultSoFar_augmented = new ArrayList<Partitioning<T>>();
       for (int i = 0; i < numNonemptyParts; i++) {
         for (Partitioning<T> p : resultSoFar) {
-          // i is < numNonemptyParts, and the size of p is always = numNonemptyParts + numEmptyParts, both of which are NN
-          // The result is a false positive.
-          /*@SuppressWarnings("index")*/
-          /*@LTLengthOf("p")*/ int i1 = i;
-          resultSoFar_augmented.add(p.addToPart(i1, elt));
+          resultSoFar_augmented.add(p.addToPart(i, elt));
         }
       }
       result.addAll(
@@ -3545,7 +3559,7 @@ public final class ArraysMDE {
     }
 
     /** Returns a new partition just like this one, but with elt added to the ith part. */
-    Partitioning<T> addToPart(/*@IndexOrHigh("this")*/ int i, T elt) {
+    Partitioning<T> addToPart(/*@NonNegative*/ int i, T elt) {
       Partitioning<T> result = new Partitioning<T>(this);
       if (size() == i) {
         ArrayList<T> newPart = newArrayList(elt);

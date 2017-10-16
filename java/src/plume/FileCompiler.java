@@ -92,7 +92,7 @@ public final class FileCompiler {
    */
   @SuppressWarnings("value") // index TODO: list support
   public FileCompiler(/*(at)MinLen(1)*/ ArrayList<String> compiler, /*@Positive*/ long timeLimit) {
-    this(compiler.toArray(new String[0]), timeLimit); // index TODO: list support
+    this(compiler.toArray(new String[0]), timeLimit);
   }
 
   /**
@@ -203,7 +203,7 @@ public final class FileCompiler {
       Matcher m = java_filename_pattern.matcher(errorString);
       while (m.find()) {
         @SuppressWarnings(
-            "nullness") // Regex Checker imprecision:  find() guarantees that group 1 exists in regexp
+            "nullness") // Regex Checker imprecision: find() guarantees that group 1 exists
         /*@NonNull*/ String sansExtension = m.group(1);
         errorClasses.add(sansExtension);
       }

@@ -89,13 +89,14 @@ public class StringBuilderDelimited implements Appendable, CharSequence {
 
   /*@Pure*/
   @Override
+  @SuppressWarnings("index") // https://github.com/kelloggm/checker-framework/issues/175
   public /*@NonNegative*/ int length(/*>>>@GuardSatisfied StringBuilderDelimited this*/) {
     return delegate.length();
   }
 
   @Override
   public CharSequence subSequence(
-      /*@IndexFor("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
+      /*@IndexOrHigh("this")*/ int start, /*@IndexOrHigh("this")*/ int end) {
     return delegate.subSequence(start, end);
   }
 

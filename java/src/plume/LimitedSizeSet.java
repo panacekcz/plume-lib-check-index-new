@@ -54,7 +54,11 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
       throw new IllegalArgumentException("max_values should be positive, is " + max_values);
     }
     // this.max_values = max_values;
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({
+      "unchecked",
+      "index", // https://github.com/kelloggm/checker-framework/issues/174
+      "value"
+    })
     /*@Nullable*/ T /*@MinLen(1)*/[] new_values_array =
         (/*@Nullable*/ T[]) new /*@Nullable*/ Object[max_values];
     values = new_values_array;
@@ -150,7 +154,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("index") // index TODO: need EnsuresQualifierIf with annotation argument
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
-      return num_values; // index TODO: need EnsuresQualifierIf with annotation argument
+      return num_values;
     } else {
       return values.length + 1;
     }
@@ -185,8 +189,7 @@ public class LimitedSizeSet<T> implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public /*@PolySameLen*/ LimitedSizeSet<T> clone(
-      /*>>>@GuardSatisfied @PolySameLen LimitedSizeSet<T> this*/) {
+  public LimitedSizeSet<T> clone(/*>>>@GuardSatisfied LimitedSizeSet<T> this*/) {
     LimitedSizeSet<T> result;
     try {
       @SuppressWarnings("unchecked")

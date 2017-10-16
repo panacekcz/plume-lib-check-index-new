@@ -146,7 +146,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
    *
    * @return maximum capacity of the set representation
    */
-  @SuppressWarnings("lowerbound") // num_values is positive when rep is nulled
+  @SuppressWarnings("lowerbound") // nulling the rep leaves num_values positive
   public /*@Positive*/ int max_size() {
     if (repNulled()) {
       return num_values; // index TODO: need EnsuresQualifierIf with annotation argument
@@ -184,8 +184,7 @@ public class LimitedSizeIntSet implements Serializable, Cloneable {
   @SuppressWarnings("sideeffectfree") // side effect to local state (clone)
   /*@SideEffectFree*/
   @Override
-  public /*@PolySameLen*/ LimitedSizeIntSet clone(
-      /*>>>@GuardSatisfied @PolySameLen LimitedSizeIntSet this*/) {
+  public LimitedSizeIntSet clone(/*>>>@GuardSatisfied LimitedSizeIntSet this*/) {
     LimitedSizeIntSet result;
     try {
       result = (LimitedSizeIntSet) super.clone();
