@@ -590,9 +590,7 @@ public final class UtilMDE {
     String sans_array = classname;
     while (sans_array.endsWith("[]")) {
       dims++;
-      @SuppressWarnings("index") // https://github.com/typetools/checker-framework/issues/1423
-      /*@NonNegative*/ int salm2 = sans_array.length() - 2;
-      sans_array = sans_array.substring(0, salm2);
+      sans_array = sans_array.substring(0, sans_array.length() - 2);
     }
     String result = primitiveClassesJvm.get(sans_array);
     if (result == null) {
@@ -698,10 +696,7 @@ public final class UtilMDE {
    * @param classname name of the type, in JVML format
    * @return name of the type, in Java format
    */
-  @SuppressWarnings({
-    "signature", // conversion routine
-    "index" // https://github.com/typetools/checker-framework/issues/1423
-  })
+  @SuppressWarnings("signature") // conversion routine
   public static /*@BinaryName*/ String fieldDescriptorToBinaryName(String classname) {
     if (classname.equals("")) {
       throw new Error("Empty string passed to fieldDescriptorToBinaryName");
